@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>promise의 catch함수</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=RRc_iVHdDKk -->
+<h1>자바스크립트 예외처리 3/4 - promise의 catch함수</h1>
+<script>/* 스크립트 */
+
+function wait(sec){
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{ reject('!!!(1) error!!!!')}, sec*500);
+    });
+}//wait
+
+wait(1)
+.catch( error => {
+    console.log(`1st catch : ${error}`);
+    throw helloWorld;
+}) //!!!(1) error!!!!    promiseCatch_02.html:20 //드디어 에러가 잡혔다 ㅎ 
+.catch( error => {console.log(`2nd catch : 계속 catch 이어 붙이고 싶으면 위에서 오류를 만드시길`);}); //실행 안 됨
+
+</script>
+</body>
+</html>

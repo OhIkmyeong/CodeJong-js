@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>promise의 catch함수</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=RRc_iVHdDKk -->
+<h1>자바스크립트 예외처리 3/4 - promise의 catch함수</h1>
+<script>/* 스크립트 */
+
+function wait(sec){
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{ reject('!!!(1) error!!!!')}, sec*500);
+    });
+}//wait
+
+wait(1)
+.then(()=>{
+    console.log('멀쩡히 일함!!');
+}, error => {
+    console.log(`wait에서 오류 있으니 내가 catch함 : ${error}`);
+})
+.catch(e =>{
+    console.log(`위의꺼 멀쩡히 then이 실행됐으니 나는 암일도 안해`);
+});
+
+
+
+
+</script>
+</body>
+</html>

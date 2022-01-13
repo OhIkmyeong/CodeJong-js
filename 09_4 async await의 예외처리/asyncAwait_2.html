@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>async/await의 예외</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=kngOWhzPHzg -->
+<h1>async/await의 예외 __ 02</h1>
+
+
+<script>/* 스크립트 */
+/*  */
+//reject를 사용하여 예외 발생
+function myPromise(){
+    return new Promise((resolve,reject) => { reject('i am ERROR'); }); /* Uncaught (in promise) i am ERROR */
+}
+{const result = myPromise();
+console.log(result); /* Promise {<rejected>: "i am ERROR"} */ }
+{
+    const result = myPromise().catch(e => {console.error(e);});
+    /* i am ERROR */
+}
+
+/*  */
+//동기적 함수 예외 발생과 동일하게 throw를 사용
+async function myAsync(){ throw 'ASYNC : ---ERROR---!';}/* Uncaught (in promise) ASYNC : ---ERROR---! */
+{const result = myAsync();
+console.log(result); /* Promise {<rejected>: "ASYNC : ---ERROR---!"} */ }
+{
+    const result = myAsync().catch(e => {console.error(e);});
+    /* ASYNC : ---ERROR---! */
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>

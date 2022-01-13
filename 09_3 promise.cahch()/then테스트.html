@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>promise의 catch함수</title>
+</head>
+<body>
+<!-- 드림코딩엘리 쇼핑몰미니게임 관련 -->
+<h1>then 테스트</h1>
+<script>/* 스크립트 */
+
+async function myFunc(){ //async 안 붙이면 에러 발생 //myFunc(...).then is not a function
+    return 'HELLO WORLD';}
+
+myFunc().then(result => console.log(result));
+
+/* 그러면 왜 fetch는 앞에 async 안 붙여도 되는가? */
+//https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch
+//"...fetch()로 부터 반환되는 Promise 객체는"
+//=> Promise 객체를 반환하기 때문
+
+function bringJson(){
+    return fetch('then.json')
+    .then(result => result.json());
+}//
+
+function showResult(data){
+    for(key in data){
+        console.log(`${key} : ${data[key]}`);
+    }
+}//
+
+bringJson()
+.then(fetchedData => showResult(fetchedData));
+
+
+</script>
+</body>
+</html>

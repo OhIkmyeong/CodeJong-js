@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>async/await의 예외</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=kngOWhzPHzg -->
+<h1>async/await의 예외 __ 01</h1>
+
+
+<script>/* 스크립트 */
+/*  */
+function myPromise(){
+    return new Promise((resolve,reject) => { resolve('PROMISE : done'); });
+}
+{const result = myPromise();
+console.log(result); /* Promise {<fulfilled>: "PROMISE : done"} */ }
+
+
+/*  */
+async function myAsync(){ return 'ASYNC : done!';}
+{const result = myAsync();
+console.log(result); /* Promise {<fulfilled>: "ASYNC : done!"} */ }
+
+//실질적으로 async에서의 return은 Promise의 resolve에 해당된다고 생각하면 됨
+
+
+
+
+</script>
+</body>
+</html>

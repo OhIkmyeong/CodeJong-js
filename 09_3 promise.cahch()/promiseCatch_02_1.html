@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>promise의 catch함수</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=RRc_iVHdDKk -->
+<h1>자바스크립트 예외처리 3/4 - promise의 catch함수</h1>
+<script>/* 스크립트 */
+
+function wait(sec){
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{ reject('!!!(1) error!!!!')}, sec*500);
+    });
+}//wait
+
+wait(1)
+.catch( error => {console.log(`1st catch : ${error}`);}) //!!!(1) error!!!!    promiseCatch_02.html:20 //드디어 에러가 잡혔다 ㅎ 
+.catch( error => {console.log(`근데 나는 then처럼 막 이어붙일 수 있는 애가 아냐`);}); //실행 안 됨
+
+
+/* Promise의 체인은 다른 체인과 좀 다른점이 있다. */
+//일반 체인 : 계속 같은 객체를 return 함
+//Promise의 체인은 각 then이나 catch마다 return하는 객체가 다르거등.
+
+//첫번째 catch가 받은 return값은 wait()의 Promise임
+//두번째 catch가 받는 return값은 첫번째 catch가 정상적으로 행동했는가에 대한 Promise
+//그렇기에 첫번째 catch는 정상적으로 잘 실행되어서 예외가 발생하지 않았으므로 >> 두번째 catch는 호출되지 않는것임
+</script>
+</body>
+</html>

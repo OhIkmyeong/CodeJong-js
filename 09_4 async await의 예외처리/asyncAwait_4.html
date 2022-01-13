@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>async/await의 예외</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=kngOWhzPHzg -->
+<h1>async/await의 예외 __ 04</h1>
+
+
+<script>/* 스크립트 */
+
+function wait(sec){
+    return new Promise((resolve,reject) => {
+        setTimeout( reject('::: I AM ERROR... :::'), sec*500);
+    });
+}//wait
+
+async function myAsync(){
+    console.log('(1)내가 먼저');
+    try{
+        await wait(2); 
+    }catch(e){
+        console.error(e);
+        //catch를 안 했으면 콜스택에서 폭발해서 밑에 (2)가 실행 안됬었겠지?
+    }
+    console.log('(2)내가 그 다음');
+}//myAsync
+
+const result = myAsync();
+console.log(result);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>async/await의 예외</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=kngOWhzPHzg -->
+<h1>async/await의 예외 __ 04-4</h1>
+
+
+<script>/* 스크립트 */
+
+function wait(sec){
+    return new Promise((resolve,reject) => {
+        setTimeout( reject('::: ERROR :::'), sec*500);
+    });
+}//wait
+
+async function myAsync(){
+    conasgasdfsole.log('(1)ㅋㅋㅋ 오타');
+    const res = await wait(2).catch((e)=>{ console.error(e); /* return 'HELLO WORLD'; */}); // ::: ERROR :::
+    console.log(res); //undefined (지금 위 catch에서 아무것도 return 안해서)
+    console.log('(2)내가 그 다음');
+}//myAsync
+
+
+
+try{
+    myAsync().catch((e) => {console.error(e);});
+}catch(error){
+    console.error(`여기선 아무리 해도 34행에서 안 잡힌다네..Promise를 return하기 때문에 위에서 해줘야함 ${error}`);
+}
+
+
+</script>
+</body>
+</html>

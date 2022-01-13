@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>자바스크립트 async / await? 나도 써보자, 기본 개념부터~</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=JzXjB6L99N4 -->
+<h1>async, await</h1>
+<script>/* 스크립트 */
+
+/* 기존 Promise */
+function delayP(sec, word="........"){
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{ 
+            console.log(word);
+            resolve( new Date().toISOString()); }, sec*1000);
+    });
+}//delayP
+
+
+/* async, await 개념 */
+function myFunc(){ return 'HELLO - func';}
+async function myAsync(){ 
+    delayP(1,'(1)async에서 ').then((time)=>{ console.log(time);}); //비동기 처리라서 밑에 return 먼저 실행되고 그다음에 이거 실행됨.-__-;
+    //만일 내가 1초 기다리게 하고 시간 출력한뒤에 리턴값 넘기고 싶을땐? - await을 쓰면 된다.
+    return '(1)::: async ::: World - async';} 
+
+console.log('===========================')
+console.log(myFunc()); //HELLO - func
+console.log('Promise를 리턴 : ',myAsync()); //Promise {<fulfilled>: "World - async"}
+console.log('Promise를 리턴 : ',delayP(1)); //Promise {<pending>}
+
+console.log('===========================')
+
+myAsync()
+.then((result)=>{ console.log(result); }); //World - async
+
+//즉 async는, 함수 앞에 달면 그 함수를 promise를 리턴하는 함수로 만들어준다.
+
+
+/* await은? */
+//Promise 가 resolve되서 결과값이 넘어올 때 까지 기다리는 애
+function normalFunc(){return '★★★★★ ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ';}
+
+async function myAsync_2(){ 
+    const result = await delayP(4, '(2) await에선??').then(result => 'x');
+    console.log(`★★★★★`,result);
+    const result2 = normalFunc();
+    console.log(result2);
+
+    return '(2)::: aync & await ::: World - async';} //Promise의 resolve
+
+myAsync_2()
+.then(result => { console.log(result) });
+
+
+/* 정리 */
+//Promise나 Async나 promise를 리턴합니다용 그렇기에 사용방법이 같다
+//호출() 한뒤 .then()을 통해 resolve된 값을 받는거지.
+//다만 async는 일반 함수처럼 쓰는데 return으로 써주는 값이 resolve취급 되는것임 ㅇㅋ?
+//await은 기다리게 해주는 애. 해당 Promise나 async가 resolve되서 결과값이 넘어올 때 까지 기다리는 애. 
+
+//얘네 쓰는 이유는 로직마다 다르지만 어쨌든 다 비슷한 놈들이니 알아서 쓰면 됨
+//콜백지옥을 벗어나고 가독성이 좋게 하기 위해 쓰는애덜임
+//비동기를 다룰 때 중요한 것 중 하나는 예외처리인데 그건 또 따로 다뤄보도록....
+
+</script>
+</body>
+</html>

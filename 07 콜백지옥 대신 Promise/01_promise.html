@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>자바스크립트 promise? 나도 써보자, 기본 개념부터~</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=CA5EDD4Hjz4 -->
+
+<script>/* 스크립트 */
+// ajax('경로/주소', result => {})
+
+function delay(sec,callback){
+    setTimeout(()=>{
+        callback(new Date().toISOString());
+    }, sec * 1000);
+}//
+
+/*  */
+console.log(`:: start :: ${new Date().toISOString()}`);
+/*  */
+delay(1, (result)=>{
+    console.log(`★ 비동기 ★ ${result}`);
+});
+
+/*  */
+console.log(':::: HELLO WORLD ::::')
+
+
+/* --- 만일 내가 delay 함수를 콜백으로 1초뒤 2초뒤 3초뒤에 실행하고 싶다? --- */
+
+delay(1, (result)=>{
+    console.log('------- 콜백 지옥 시작 ---------');
+    console.log(`----(1)----`);
+
+    delay(1, (result)=>{
+        console.log(`----(2-1)----`);
+        
+        delay(1, (result)=>{
+            console.log(`----(3)----`);
+            console.log('================ ||||  ================');
+        });
+        console.log(`----(2-2) 넌 이게 파악이 되니 이따위로 짜지 말라고----`);
+    });
+});
+</script>
+</body>
+</html>

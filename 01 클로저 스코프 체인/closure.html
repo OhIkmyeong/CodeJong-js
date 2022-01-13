@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>클로저 스코프 체인</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=MbYShFxp-j0 -->
+<div>자바스크립트에 대해 사람들이 많이 헷갈려 하는 것 중 하나 : Closure</div>
+
+<script>/* 스크립트 */
+ 
+function outer(){
+    let a = 1; 
+    console.log(a);}
+
+outer();
+
+//우리가 a값에 뭐가 들어있는지 찾고 싶잖아? 그 기능을 하는게 Scope임
+/* <table><tr><td>a(변수)</td><td>1(value)</td></tr></table> 이런 개념  */
+/* <table>이 Scope */
+/* Scope는 outer에 속해있다, 여기서 outer는 함수 */
+/* JS는 함수단위로 scope가 생성된다 */
+
+
+/* =================================== */
+let globalScope = 'I am Global Scope...';
+
+function outer2(){
+    let a = 11;
+    let aa = 111;
+    let b = 'BBB';
+    function inner(){ 
+        let a = 22;
+        aa = 222; 
+        console.log(`!!! INNER !!! \n 둘다 let한 경우 : ${a} \n inner에선 let 안 한 경우(변수수정) : ${aa} \n outer에서 선언한 변수 : ${b}`);
+        console.log(globalScope);
+    }
+    console.log(`!!! OUTER !!!! \n 둘다 let한 경우 : ${a} \n inner에선 let 안 한 경우(변수수정) : ${aa}`);
+    inner();
+}
+
+outer2();
+
+//이런 경우 inner scope가 하나 더 생기겠지
+/* inner에선 b 변수를 선언하지 않았는데 b를 호출했지? 
+(1)inner함수의 Scope에서 먼저 b변수를 찾음. 없다? 
+(2)그러면 부모범위인 outer에서 b변수를 찾음*/
+/* outer2의 모습을 봐 scope끼리 연결되어있지... 이게 scope chain이다 */
+
+console.log('==================(1)==================');
+let myVar = outer2;
+myVar();
+
+let myVar_1 = function outer3(){ console.log('...Function expression : outer3');};
+myVar_1();
+
+console.log('==================(2-1)==================');
+let myVar2 = outer2(); //이미 실행됨
+console.log('==================(2-2  변수 = 함수(); 한 경우는 이미 실행되어있고, 변수()로 호출하면 에러나용)==================');
+//myVar2(); //ERROR //is not a function
+
+console.log('==================(3)==================');
+myVar2; //아무것도 안떠욤...
+console.log(myVar2); //undefined
+
+
+
+</script>
+</body>
+</html>

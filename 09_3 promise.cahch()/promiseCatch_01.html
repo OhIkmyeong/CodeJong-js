@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>promise의 catch함수</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=RRc_iVHdDKk -->
+<h1>자바스크립트 예외처리 3/4 - promise의 catch함수</h1>
+<script>/* 스크립트 */
+
+function wait(sec){
+    return new Promise((resolve,reject) => {
+        setTimeout(()=>{ reject('!!!(1) error!!!!')}, sec*500);
+    });
+}//wait
+
+//wait(3); /* promiseCatch_01.html:16 Uncaught (in promise) !!!(1) error!!!! */
+
+try{
+    wait(3);
+}catch(error){
+    console.error(error);
+}// promiseCatch_01.html:16 Uncaught (in promise) !!!(1) error!!!!
+//이렇게 해도 에러 안 잡힘
+//동기적인 코드 실행이 아니라서, 예외가 발생하는 타이밍이 catch먼저 되고 try.. 하여간 콜스택이 안맞아서 그래 ㅎ ...
+
+
+</script>
+</body>
+</html>

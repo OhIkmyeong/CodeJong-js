@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="X-UA-Compatible" content="IE/edge"/>
+    <title>자바스크립트 예외처리 2/4 - try catch, Error 객체</title>
+</head>
+<body>
+<!-- https://www.youtube.com/watch?v=wf6AlMj7TFA -->
+<h1>try catch, Error_2</h1>
+<script>/* 스크립트 */
+
+function f1(){
+    console.log('--- f1 start ---')
+    f2();
+    console.log('--- f1 END ---')
+}//
+
+function f2(){
+    console.log('f2 start');
+    throw '에러';
+    console.log('f2 END');
+}//
+
+console.log('will : f1');
+f1();
+console.log('did : f1');
+
+/* 콜스택 구조로 인해
+
+[f2] -- 여기서 중간에 에러나니
+[f1] -- 응 나도 안해
+[글로벌] -- 나도 안해
+해서 f2 END부터 쭉 출력이 안되는것임 (f2 start까지만 콘솔 찍히고, 에러 찍히고, 그 뒤론 묵묵부답)
+
+*/
+</script>
+</body>
+</html>
