@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03.클로저실수를 let으로 해결하자</title>
+</head>
+<body>
+    <!-- https://www.youtube.com/watch?v=RZ3gXcI1MZY -->
+
+    <h1>클로저 실수 : var인경우 </h1>
+    <button id="btn_0">버튼00</button>
+    <button id="btn_1">버튼01</button>
+    <button id="btn_2">버튼02</button>
+
+<script>
+    const btns = [
+        document.getElementById('btn_0'),
+        document.getElementById('btn_1'),
+        document.getElementById('btn_2')
+    ];
+
+    function set_click(){
+        for(var i=0; i<3; i++){
+            btns[i].onclick = function(){console.log(i)}
+        }//for
+    }//set_click
+
+    set_click(); //어느 버튼을 누르든 3만 찍힘
+</script>
+</body>
+</html>

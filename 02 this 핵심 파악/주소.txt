@@ -1,0 +1,4 @@
+https://www.youtube.com/watch?v=PAr92molMHU
+
+대부분의 경우 this의 값은 호출하는 방법에 의해 결정된다.
+ES5때는 bind를 소개함 : 함수가 어떻게 호출되었는지 개의차 않고 설정할 수 있는...
