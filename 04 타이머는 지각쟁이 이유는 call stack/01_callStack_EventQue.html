@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 타이머는 지각쟁이</title>
+</head>
+<body>
+    <!-- https://www.youtube.com/watch?v=iNH4UQxZexs -->
+    싱글스레드라는 특징 때문에 js의 타이머는 시간을 보장하지 못해.
+
+<script>
+
+    function doSomething(i){
+        setTimeout(()=>{console.log(i, 'doSomething')}, 1000);
+    }//doSomething
+
+    function yo(){
+        setTimeout(function(){
+            console.log(`${1500}ms면 타이머 끝`)
+        },1500);
+
+        for(let i=0; i<3; i++){
+            doSomething(i);
+        }//for
+        console.log('3초 걸리는 for 문 끝');
+    }//yo
+
+    yo();
+    console.log('----코드블럭 끝-----')
+
+/****
+ * 3초 걸리는 for 문 끝
+ * ----코드블럭 끝-----
+ * 0 'doSomething'
+ * 1 'doSomething'
+ * 2 'doSomething'
+ * 1500ms면 타이머 끝
+*/
+
+/* 싱글스레드라서 1500ms가 중간에 끼어들지 못하고, for문으로 doSomething을 다 처리한 후에야 태스크큐에서 콜스택으로 불러오는거임 */
+</script>
+</body>
+</html>

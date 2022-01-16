@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06 ES6 arrow function에 없는 3가지</title>
+</head>
+<body>
+    <!-- https://www.youtube.com/watch?v=4zjKltnIBug -->
+    <h1>()=>{}에 없는 3가지</h1>
+    <h3>함수 이름. 전부 익명함수니까</h3>
+    <h3>자신만의 this. 그래서 this라고 쓰면 자신이 있는 스코프로부터 참조함</h3>
+    <h3>arguments. 근데 이건 걍 rest parameters로 받자 (...args)</h3>
+
+    <button id="btn_1">bind 안 한 버튼</button>
+    <button id="btn_2">normal Function + bind(1)</button>
+    <button id="btn_3">test - normal Function + bind(2)</button>
+
+    <br><br>
+    
+    <button id="btn_arrow_1">겉은 normal, addEventListener는 arrowFunc</button>
+
+<script>
+    //화살표 함수에는 없는 것 : 함수이름, this, arguments
+
+    //01. 함수이름
+    //함수표현식으로 하고 싶으면 변수에 넣어서 하면 되지
+    const like_this = (name)=>{console.log(name);}
+    like_this('Moira');
+
+    //02. this
+    // 기존에는 bind,call,apply이런애들로 this를 바인딩하거나 주입해줬지
+
+    const btn_1 = document.getElementById('btn_1');
+    const btn_2 = document.getElementById('btn_2');
+    const btn_3 = document.getElementById('btn_3');
+    const obj_1 = {
+        count : 0,
+        setCounter : function(){
+            console.log('normal : ',this.count++);
+            btn_1.addEventListener('click',function(){
+                console.log('no bind, normal function : ',this); //<button id="btn_1">
+            });
+
+            btn_2.addEventListener('click',(function(){
+                console.log('bind, normal function : ', this);
+                //obj_1{}
+            }).bind(this))
+        },
+        whoAmI : function(){console.log(this)},
+        test : btn_3.addEventListener('click',(function(){
+            console.log('test',this);
+            //아무 bind도 하지 않으면 this는 <button id="btn_3">
+            //그냥 쌩 this를 bind 하면 여기선 또 window가 됨.
+        }).bind(this))
+    };
+    obj_1.setCounter(); //normal : 0
+    obj_1.whoAmI(); //obj_1 {...}
+
+    //이래서 객체 안에서는 arrow function 쓰는걸 추천 안해?
+    //하지만 잘 쓰면 다르다고 또
+    const btn_arrow_1 = document.getElementById('btn_arrow_1');
+
+    const obj_2 = {
+        count : 0,
+        setCounter : () => {console.log('arrow : ',this.count++);},
+        whoAmI : ()=>{console.log(this)},
+        count_2 : 100,
+        setCounter2 : function(){
+            btn_arrow_1.addEventListener('click',()=>{
+                console.log('normal + arrow',this); //obj_2{}
+                console.log(this.count_2--);
+            })
+        }
+    };
+    obj_2.setCounter(); //arrow : NaN
+    obj_2.whoAmI(); //Window
+    obj_2.setCounter2();
+</script>
+<script>
+    console.log('this가 없다보니 또 안되는게 있지')
+    const myClass_1 = function(name,age){
+        this.name = name;
+        this.age = age;
+        this.say = function(){console.log(this);}
+    };
+    const moira_1 = new myClass_1('모이라',48); //myClass_1 {name: '모이라', age: 48, say: ƒ}
+    moira_1.say();
+
+    //앗 근데 arrow function은 자신만의 this가 없다보니 생성자함수로는 활용을 못하겠네.
+    //그렇다는건 prototype도 존재하지 않는다는 소리군.
+</script>
+<script>
+    //잠시 코딩앙마의 this 보자
+    //https://www.youtube.com/watch?v=ZXQA4gRHqe0
+    const superman = {
+        name : 'Clark Kent', age : 33,
+        fly : function(){console.log(this.name, '날아가요');},
+        fly2(){console.log(this.name, '이렇게도 단축 가능하다구요')}
+    }
+    superman.fly();
+    superman.fly2();
+
+    const user = {
+        name:'Mike', 
+        say : function(){console.log(this.name);}
+    };
+    const user2 = {
+        name : 'Jane',
+        say : ()=>{console.log(this.name)}
+    };
+
+    user.say(); //Mike
+    user2.say(); //""
+
+    //()=>{}는 자신만의 this가 없어서 외부에서 가져온다고.
+
+    const newb = user;
+    newb.name = "I CHANGED MY NAME";
+    user.say(); //I CHANGED MY NAME
+
+    let boy = {
+        name : "시그마", 
+        say : function(){console.log(this.name);}}
+
+    const tanker = boy;
+    boy = null;
+    tanker.say(); //시그마
+</script>
+<script>
+    console.log('03. ()=>{}에는 arguments가 없다')
+
+    const myFunc1 = function(){console.log(arguments)}
+    myFunc1(1,2,3,4,5); //Arguments(5) [1, 2, 3, 4, 5, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+    //arguments는 유사배열을 내뱉는다
+
+    //그래서 화살표 함수일땐 rest parameters로 받아와야함
+    const myFunc2 = (...test) =>{
+        console.log(test);
+    }
+    myFunc2('a','b','c'); //(3) ['a', 'b', 'c']
+    //rest parameters는 찐 배열로 준다 ㅎㅎ
+</script>
+</body>
+</html>
